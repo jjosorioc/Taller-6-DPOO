@@ -359,6 +359,16 @@ public class InterfazLibreria extends JFrame
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
+	
+	public void eliminarLibros()
+	{
+		String autores = JOptionPane.showInputDialog(this,"Ingrese los nombres de los autores de los libros que desea eliminar (Estos deben estar separados por comas)");
+		try {
+			libreria.eliminarLibros(autores);	
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
 
 	// ************************************************************************
 	// Main

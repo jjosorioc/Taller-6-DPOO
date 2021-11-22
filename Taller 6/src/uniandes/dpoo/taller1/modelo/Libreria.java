@@ -533,64 +533,72 @@ public class Libreria
 
 	public void eliminarLibros(String autores) throws Exception
 	{
-		String[] separadoStrings = autores.split(",");
-
-		ArrayList<Libro> librosPorEliminar = new ArrayList<Libro>();
-
-		ArrayList<String> autoresNoExisten = new ArrayList<>();
-
-
-		String autoresExistenString = "\nLos autores que sí existen son:\n";
-
-		String librosExisten = "\nLos libros que no se pudieron eliminar son:\n";
-
-		boolean existenTodos = true;
-
-		for (String autor : separadoStrings)
+		if (autores.length()!=0)
 		{
-			ArrayList<Libro> librosDelAutor = this.buscarLibrosAutor(autor);
+			String[] separadoStrings = autores.split(",");
 
-			if (librosDelAutor.size() == 0) // No existe el autor
-			{
-				existenTodos = false;
-				autoresNoExisten.add(autor);
+			ArrayList<Libro> librosPorEliminar = new ArrayList<Libro>();
 
-			} else
+			ArrayList<String> autoresNoExisten = new ArrayList<>();
+
+
+			String autoresExistenString = "\nLos autores que sí existen son:\n";
+
+			String librosExisten = "\nLos libros que no se pudieron eliminar son:\n";
+
+			boolean existenTodos = true;
+
+			for (String autor : separadoStrings)
 			{
-				autoresExistenString += "- " + autor + "\n";
-				for (Libro l : librosDelAutor)
+				ArrayList<Libro> librosDelAutor = this.buscarLibrosAutor(autor);
+
+				if (librosDelAutor.size() == 0) // No existe el autor
 				{
-					librosPorEliminar.add(l);
-					librosExisten += "- " + l.toString() + "\n";
+					existenTodos = false;
+					autoresNoExisten.add(autor);
+
+				} else
+				{
+					autoresExistenString += "- " + autor + "\n";
+					for (Libro l : librosDelAutor)
+					{
+						librosPorEliminar.add(l);
+						librosExisten += "- " + l.toString() + "\n";
+					}
 				}
 			}
-		}
 
-		if (existenTodos == false)
-		{
-			String mensaje = "Autores que no existen: \n";
-
-			for (String autor : autoresNoExisten)
+			if (existenTodos == false)
 			{
-				mensaje += "- " + autor + "\n"; // Se agregan los autores que no existen
-			}
+				String mensaje = "Autores que no existen: \n";
 
-			mensaje += autoresExistenString; // autores que sí existen
+				for (String autor : autoresNoExisten)
+				{
+					mensaje += "- " + autor + "\n"; // Se agregan los autores que no existen
+				}
 
-			mensaje += librosExisten; // Libros que no se borraron
+				mensaje += autoresExistenString; // autores que sí existen
 
-			throw new Exception(mensaje);
-		} else
-		{
+				mensaje += librosExisten; // Libros que no se borraron
 
-			for (Libro l : librosPorEliminar)
+				throw new Exception(mensaje);
+			} else
 			{
-				this.catalogo.remove(l);
+
+				for (Libro l : librosPorEliminar)
+				{
+					this.catalogo.remove(l);
+				}
+				
+				actualizarLibrosCSV();
+				throw new Exception("¡Se eliminarion " + librosPorEliminar.size() + " libros!");
 			}
-			
-			actualizarLibrosCSV();
-			throw new Exception("¡Se eliminarion " + librosPorEliminar.size() + " libros!");
 		}
+		else
+		{
+			throw new Exception("Ingrese el nombre de al menos un autor!");
+		}
+		
 	}
 
 }

@@ -157,7 +157,7 @@ public class PanelBotones extends JPanel implements ActionListener
 		}
 		else if (ELIMINAR_LIBROS.equals(comando))
 		{
-			
+			ventana.eliminarLibros();
 		}
 	}
 
