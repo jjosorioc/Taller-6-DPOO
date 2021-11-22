@@ -485,7 +485,7 @@ public class Libreria
 	
 	public void cambiarCategoria(String nombreCategoria, String nuevoNombre) throws Exception
 	{
-
+		Boolean centinela = false;
 		for(int i=0;i<categorias.length;i++){  //Se confirma si el nuevo nombre de la categoría ya existe. 
 	        Categoria categoria = categorias[i];
 	        if (nuevoNombre.equals(categoria.darNombre()))
@@ -501,13 +501,20 @@ public class Libreria
 	        	laCategoria.cambiarNombre(nuevoNombre);
 	        	System.out.println(laCategoria.darNombre());
 	        	actualizarCSV();
-	        }
-	        else
-	        {
-	        	throw new Exception("La categoría ingresada no existe"); //Si ya existe lanza el error.
+	        	centinela = true;
 	        }
 	    }  
-
+    	if (centinela == false)
+    	{
+    		throw new Exception("La categoría ingresada no existe"); //Si ya existe lanza el error.
+    	}
+    
 	}
+    	
+    public void eliminarLibros(String autores) throws Exception
+    {
+    	
+    }
+    	
 
 }
